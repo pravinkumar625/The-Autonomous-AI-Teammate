@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage } from '../types';
 import { Bot, Send, X, RefreshCw, AlertCircle } from 'lucide-react';
 
-
 interface ChatDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -97,28 +96,28 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-[#0d1117] border-l border-[#1e2634] shadow-2xl flex flex-col justify-between text-left animate-in slide-in-from-right duration-300">
+    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-[#091026] border-l border-slate-800 shadow-2xl flex flex-col justify-between text-left animate-in slide-in-from-right duration-300 font-sans">
       
       {/* Header */}
-      <div className="p-4 border-b border-[#1e2634] bg-[#121721] flex items-center justify-between">
+      <div className="p-4 border-b border-slate-800 bg-[#0f172a] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#a3e635] flex items-center justify-center text-[#0b0e14] font-black shadow-md shadow-[#a3e635]/20">
-            <Bot className="w-5 h-5 text-[#0b0e14]" />
+          <div className="w-9 h-9 rounded-xl bg-[#2563eb] flex items-center justify-center text-white font-black shadow-md shadow-blue-500/30">
+            <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-heading font-extrabold text-white text-sm">Ask IVY's AI</h3>
-              <span className="bg-[#a3e635]/20 text-[#a3e635] text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border border-[#a3e635]/30">
+              <span className="bg-blue-500/20 text-[#60a5fa] text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border border-blue-400/30">
                 Real n8n Webhook
               </span>
             </div>
-            <p className="text-[11px] text-[#94a3b8]">Connected to live sahay backend</p>
+            <p className="text-[11px] text-slate-400">Connected to live sahay backend</p>
           </div>
         </div>
 
         <button
           onClick={onClose}
-          className="p-1.5 text-[#94a3b8] hover:text-white rounded-lg hover:bg-[#1e2736] transition"
+          className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -129,7 +128,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
         
         {/* Seeded Quick Prompts */}
         <div className="space-y-2 mb-4">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748b] block">
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
             Test Real n8n Webhook Prompts:
           </span>
 
@@ -137,7 +136,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
             <button
               onClick={() => handleSendMessage("Hi Ivy, I am very interested in the LakeForge Pro plan. Please arrange a follow-up with me.")}
               disabled={isLoading}
-              className="p-2.5 rounded-xl bg-[#141b26] hover:bg-[#1c2636] border border-[#232d3f] text-left text-xs text-[#a3e635] hover:text-white font-medium transition disabled:opacity-50"
+              className="p-2.5 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-left text-xs text-[#60a5fa] hover:text-white font-medium transition disabled:opacity-50 cursor-pointer"
             >
               🚀 <strong>Test 1:</strong> "Hi Ivy, I am very interested in the LakeForge Pro plan. Please arrange a follow-up with me."
             </button>
@@ -145,7 +144,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
             <button
               onClick={() => handleSendMessage("I am CUST001. My payment issue happened again. I already contacted support before and it was not resolved. I need help urgently. Please investigate and escalate if necessary.")}
               disabled={isLoading}
-              className="p-2.5 rounded-xl bg-[#141b26] hover:bg-[#1c2636] border border-[#232d3f] text-left text-xs text-amber-300 hover:text-white font-medium transition disabled:opacity-50"
+              className="p-2.5 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-left text-xs text-amber-300 hover:text-white font-medium transition disabled:opacity-50 cursor-pointer"
             >
               ⚠️ <strong>Test 2:</strong> "I am CUST001. My payment issue happened again. I need help urgently..."
             </button>
@@ -154,14 +153,14 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={() => handleSendMessage("What needs attention?")}
                 disabled={isLoading}
-                className="flex-1 p-2 rounded-xl bg-[#141b26] hover:bg-[#1c2636] border border-[#232d3f] text-center text-xs text-[#94a3b8] hover:text-white transition disabled:opacity-50"
+                className="flex-1 p-2 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-center text-xs text-slate-400 hover:text-white transition disabled:opacity-50 cursor-pointer"
               >
                 What needs attention?
               </button>
               <button
                 onClick={() => handleSendMessage("Show me outcomes this week")}
                 disabled={isLoading}
-                className="flex-1 p-2 rounded-xl bg-[#141b26] hover:bg-[#1c2636] border border-[#232d3f] text-center text-xs text-[#94a3b8] hover:text-white transition disabled:opacity-50"
+                className="flex-1 p-2 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-center text-xs text-slate-400 hover:text-white transition disabled:opacity-50 cursor-pointer"
               >
                 Weekly outcomes
               </button>
@@ -178,23 +177,23 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
             <div
               className={`max-w-[85%] p-3.5 rounded-2xl text-xs leading-relaxed ${
                 msg.sender === 'user'
-                  ? 'bg-[#a3e635] text-[#0b0e14] font-semibold rounded-br-none shadow-md shadow-[#a3e635]/10'
+                  ? 'bg-[#2563eb] text-white font-semibold rounded-br-none shadow-md shadow-blue-500/20'
                   : msg.isError
                   ? 'bg-rose-950/80 border border-rose-800 text-rose-200 rounded-bl-none'
-                  : 'bg-[#18202c] border border-[#232d3f] text-white rounded-bl-none'
+                  : 'bg-[#1e293b] border border-slate-700 text-white rounded-bl-none'
               }`}
             >
               {msg.isError && <AlertCircle className="w-4 h-4 inline mr-1 text-rose-400" />}
               <p className="whitespace-pre-wrap">{msg.text}</p>
             </div>
-            <span className="text-[10px] text-[#64748b] mt-1 px-1 font-mono">{msg.timestamp}</span>
+            <span className="text-[10px] text-slate-500 mt-1 px-1 font-mono">{msg.timestamp}</span>
           </div>
         ))}
 
         {/* Thinking Indicator */}
         {isLoading && (
-          <div className="flex items-center gap-2 p-3 rounded-2xl bg-[#18202c] border border-[#232d3f] text-xs text-[#a3e635] font-mono animate-pulse w-fit">
-            <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#a3e635]" />
+          <div className="flex items-center gap-2 p-3 rounded-2xl bg-[#1e293b] border border-slate-700 text-xs text-[#60a5fa] font-mono animate-pulse w-fit">
+            <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#60a5fa]" />
             <span>Ivy is thinking...</span>
           </div>
         )}
@@ -203,7 +202,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
       </div>
 
       {/* Input Area */}
-      <div className="p-3 border-t border-[#1e2634] bg-[#121721] space-y-2">
+      <div className="p-3 border-t border-slate-800 bg-[#0f172a] space-y-2">
         <div className="relative flex items-center">
           <textarea
             rows={2}
@@ -212,17 +211,17 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isLoading}
-            className="w-full pl-3 pr-10 py-2 bg-[#0b0e14] text-xs text-white placeholder-[#64748b] rounded-xl border border-[#232d3f] focus:outline-none focus:border-[#a3e635] resize-none disabled:opacity-50"
+            className="w-full pl-3 pr-10 py-2 bg-[#091026] text-xs text-white placeholder-slate-500 rounded-xl border border-slate-800 focus:outline-none focus:border-[#3b82f6] resize-none disabled:opacity-50"
           />
           <button
             onClick={() => handleSendMessage()}
             disabled={isLoading || !inputMessage.trim()}
-            className="absolute right-2 bottom-2.5 p-2 bg-[#a3e635] hover:bg-[#bef264] text-[#0b0e14] rounded-lg transition disabled:opacity-40 disabled:hover:bg-[#a3e635]"
+            className="absolute right-2 bottom-2.5 p-2 bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-lg transition disabled:opacity-40 cursor-pointer"
           >
-            <Send className="w-3.5 h-3.5" />
+            <Send className="w-3.5 h-3.5 text-white" />
           </button>
         </div>
-        <p className="text-[10px] text-[#64748b] text-center">
+        <p className="text-[10px] text-slate-500 text-center">
           Press <kbd className="text-white">Enter</kbd> to send · <kbd className="text-white">Shift+Enter</kbd> for new line
         </p>
       </div>

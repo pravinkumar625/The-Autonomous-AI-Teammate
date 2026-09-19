@@ -83,7 +83,7 @@ export function App() {
 
   // Render Admin / Internal Teammate Dashboard View
   return (
-    <div className="flex min-h-screen bg-[#0b0e14] text-white font-sans antialiased selection:bg-[#a3e635] selection:text-[#0b0e14]">
+    <div className="flex min-h-screen bg-[#070d1e] text-white font-sans antialiased selection:bg-[#2563eb] selection:text-white">
       
       {/* Sidebar Navigation */}
       <SidebarNav activeTab={activeTab} setActiveTab={setActiveTab} userName={userName} />
@@ -123,13 +123,13 @@ export function App() {
         </main>
       </div>
 
-      {/* Floating Lime "Ask IVY's" Chat Button */}
+      {/* Floating Blue "Ask IVY's" Chat Button */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-6 right-6 z-40 ivy-lime-btn px-5 py-3 rounded-full text-xs font-black shadow-2xl shadow-[#a3e635]/30 flex items-center gap-2.5 cursor-pointer transform hover:scale-105 transition"
+          className="fixed bottom-6 right-6 z-40 bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-5 py-3 rounded-full text-xs font-black shadow-2xl shadow-blue-500/30 flex items-center gap-2.5 cursor-pointer transform hover:scale-105 transition"
         >
-          <Sparkles className="w-4 h-4 text-[#0b0e14]" />
+          <Sparkles className="w-4 h-4 text-white" />
           <span>Ask IVY's AI</span>
         </button>
       )}
@@ -140,7 +140,7 @@ export function App() {
         onClose={() => setIsChatOpen(false)}
       />
 
-      {/* Demo Video Modal */}
+      {/* Base Video Modal */}
       <VideoModal
         isOpen={isVideoOpen}
         onClose={() => setIsVideoOpen(false)}

@@ -2,13 +2,13 @@
 
 @layer base {
   :root {
-    --bg-main: #0b0e14;
-    --bg-surface: #121721;
-    --bg-card: #18202c;
-    --border-color: #232d3f;
-    --accent-lime: #a3e635;
-    --accent-lime-hover: #bef264;
-    --text-primary: #f8fafc;
+    --bg-main: #0b1329;
+    --bg-surface: #0f172a;
+    --bg-card: #1e293b;
+    --border-color: #334155;
+    --accent-blue: #3b82f6;
+    --accent-blue-hover: #60a5fa;
+    --text-primary: #ffffff;
     --text-secondary: #94a3b8;
   }
 
@@ -24,13 +24,13 @@
   }
 }
 
-/* Custom Ivy UI Styles matching the reference screenshot input_file_0.png */
+/* Custom Ivy UI Styles with Electric Blue & White Theme */
 .ivy-card {
-  background: rgba(24, 32, 44, 0.7);
+  background: rgba(30, 41, 59, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
 }
 
 .ivy-card-hover {
@@ -38,20 +38,20 @@
 }
 
 .ivy-card-hover:hover {
-  border-color: rgba(163, 230, 53, 0.3);
-  box-shadow: 0 0 25px -5px rgba(163, 230, 53, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.25);
 }
 
-.ivy-lime-btn {
-  background-color: #a3e635;
-  color: #0b0e14;
+.ivy-lime-btn, .ivy-blue-btn {
+  background-color: #2563eb;
+  color: #ffffff;
   font-weight: 700;
   transition: all 0.2s ease;
 }
 
-.ivy-lime-btn:hover {
-  background-color: #bef264;
-  box-shadow: 0 0 20px rgba(163, 230, 53, 0.35);
+.ivy-lime-btn:hover, .ivy-blue-btn:hover {
+  background-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.45);
 }
 
 /* Custom Scrollbar */
@@ -60,12 +60,12 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0e14;
+  background: #0b1329;
 }
 ::-webkit-scrollbar-thumb {
-  background: #232d3f;
+  background: #334155;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #475569;
 }

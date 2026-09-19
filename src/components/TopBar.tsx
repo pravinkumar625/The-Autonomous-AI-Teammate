@@ -28,42 +28,42 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVid
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-[#0b0e14]/90 backdrop-blur-md border-b border-[#1e2634] px-8 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-20 bg-[#091026]/90 backdrop-blur-md border-b border-slate-800/80 px-8 py-4 flex items-center justify-between font-sans">
       
-      {/* Breadcrumb matching screenshot */}
-      <div className="flex items-center gap-2 text-xs font-medium text-[#94a3b8]">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
         <span>Workspace</span>
         <span>›</span>
         <span className="text-white font-bold">{getBreadcrumb()}</span>
       </div>
 
-      {/* Right icons & Profile matching screenshot */}
+      {/* Right icons & Profile */}
       <div className="flex items-center gap-3">
         
         {/* Customer Portal View Switcher Button */}
         {onSwitchRole && (
           <button
             onClick={() => onSwitchRole('customer')}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1e2736] hover:bg-[#283549] border border-[#2d384d] rounded-xl text-xs font-bold text-[#94a3b8] hover:text-white transition cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0f172a] hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition cursor-pointer"
             title="Switch to Customer Portal View"
           >
-            <Users className="w-3.5 h-3.5 text-[#a3e635]" />
+            <Users className="w-3.5 h-3.5 text-[#60a5fa]" />
             <span className="hidden sm:inline">Customer View</span>
           </button>
         )}
 
-        {/* Watch Demo Video Button */}
+        {/* Base Video Showcase Button */}
         <button
           onClick={onOpenVideo}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#a3e635]/10 hover:bg-[#a3e635]/20 border border-[#a3e635]/30 rounded-xl text-xs font-bold text-[#a3e635] transition cursor-pointer"
-          title="Watch Product Demo Video"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 rounded-xl text-xs font-bold text-[#60a5fa] transition cursor-pointer"
+          title="Watch Full-Screen Base Video Showcase"
         >
-          <Video className="w-3.5 h-3.5 text-[#a3e635]" />
-          <span className="hidden md:inline">Watch Demo</span>
+          <Video className="w-3.5 h-3.5 text-[#60a5fa]" />
+          <span className="hidden md:inline">Base Video</span>
         </button>
 
         <button 
-          className="p-2 text-[#94a3b8] hover:text-white hover:bg-[#151c27] rounded-xl transition"
+          className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition"
           title="Help & Documentation"
         >
           <HelpCircle className="w-4 h-4" />
@@ -71,17 +71,16 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVid
 
         <button 
           onClick={onOpenChat}
-          className="relative p-2 text-[#94a3b8] hover:text-white hover:bg-[#151c27] rounded-xl transition cursor-pointer"
+          className="relative p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer"
           title="Open AI Chat Drawer"
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#a3e635] ring-2 ring-[#0b0e14]"></span>
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#60a5fa] ring-2 ring-[#091026]"></span>
         </button>
 
-
-        {/* Profile Pill matching screenshot */}
-        <div className="flex items-center gap-2 pl-2 border-l border-[#1e2634]">
-          <div className="w-8 h-8 rounded-full bg-[#1e2736] border border-[#2d384d] flex items-center justify-center text-white font-bold text-xs">
+        {/* Profile Pill */}
+        <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
+          <div className="w-8 h-8 rounded-full bg-[#1e293b] border border-slate-700 flex items-center justify-center text-white font-bold text-xs">
             {initials}
           </div>
           <span className="text-xs font-bold text-white hidden sm:inline">{firstName}</span>
