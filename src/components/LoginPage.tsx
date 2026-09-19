@@ -4,9 +4,10 @@ import type { UserRole } from '../types';
 
 interface LoginPageProps {
   onLogin: (name: string, email: string, role: UserRole) => void;
+  onWatchVideo?: () => void;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onWatchVideo }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState<UserRole>('admin');
@@ -135,15 +136,26 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             </button>
           </form>
 
-          {/* Frontend Demo Disclaimer */}
-          <div className="p-3.5 rounded-xl bg-[#121721] border border-[#232d3f] text-[11px] text-[#94a3b8] font-mono leading-relaxed space-y-1">
-            <div className="flex items-center gap-1.5 font-bold text-slate-300">
-              <ShieldCheck className="w-4 h-4 text-[#a3e635]" />
-              Frontend Demo Workspace
+          {/* Frontend Demo Disclaimer & Replay Video Button */}
+          <div className="space-y-3">
+            <button
+              type="button"
+              onClick={onWatchVideo}
+              className="w-full py-2.5 bg-[#141b26] hover:bg-[#1e2736] border border-[#232d3f] text-[#a3e635] text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Bot className="w-4 h-4 text-[#a3e635]" />
+              Watch Platform Intro Video
+            </button>
+
+            <div className="p-3.5 rounded-xl bg-[#121721] border border-[#232d3f] text-[11px] text-[#94a3b8] font-mono leading-relaxed space-y-1">
+              <div className="flex items-center gap-1.5 font-bold text-slate-300">
+                <ShieldCheck className="w-4 h-4 text-[#a3e635]" />
+                Frontend Demo Workspace
+              </div>
+              <p>
+                Authentication is simulated for this frontend demo. Full NextAuth/OAuth providers can be connected seamlessly.
+              </p>
             </div>
-            <p>
-              Authentication is simulated for this frontend demo. Full NextAuth/OAuth providers can be connected seamlessly.
-            </p>
           </div>
 
         </div>

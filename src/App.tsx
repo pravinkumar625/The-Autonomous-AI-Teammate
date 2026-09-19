@@ -11,12 +11,14 @@ import { ChatDrawer } from './components/ChatDrawer';
 import { VideoModal } from './components/VideoModal';
 import { LoginPage } from './components/LoginPage';
 import { CustomerDashboard } from './components/CustomerDashboard';
+import { IntroVideoPage } from './components/IntroVideoPage';
 import type { TabType, ConversationItem, UserRole } from './types';
 import { Sparkles } from 'lucide-react';
 
 
 export function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Show login first
+  const [showIntro, setShowIntro] = useState<boolean>(true); // Show Intro Video FIRST before login
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
   const [userRole, setUserRole] = useState<UserRole>('admin');
@@ -37,8 +39,19 @@ export function App() {
     setActiveTab('conversations');
   };
 
+  // 1. Show Video Showcase Page BEFORE Login Page
+  if (showIntro) {
+    return <IntroVideoPage onStart={() => setShowIntro(false)} />;
+  }
+
+  // 2. Show Login Page after Video Intro
   if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} />;
+    return (
+      <LoginPage 
+        onLogin={handleLogin} 
+        onWatchVideo={() => setShowIntro(true)} 
+      />
+    );
   }
 
   // Render Customer Dashboard View
