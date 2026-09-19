@@ -1,16 +1,16 @@
 import React from 'react';
-import { HelpCircle, Bell } from 'lucide-react';
+import { HelpCircle, Bell, Video } from 'lucide-react';
 import type { TabType } from '../types';
-
 
 interface TopBarProps {
   activeTab: TabType;
   onOpenChat?: () => void;
+  onOpenVideo?: () => void;
   userName: string;
   userEmail: string;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, userName, userEmail: _userEmail }) => {
+export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVideo, userName, userEmail: _userEmail }) => {
   const initials = userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'U';
   const firstName = userName ? userName.split(' ')[0] : 'User';
 
@@ -40,6 +40,16 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, userName,
 
       {/* Right icons & Profile matching screenshot */}
       <div className="flex items-center gap-3">
+        {/* Watch Demo Video Button */}
+        <button
+          onClick={onOpenVideo}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#a3e635]/10 hover:bg-[#a3e635]/20 border border-[#a3e635]/30 rounded-xl text-xs font-bold text-[#a3e635] transition cursor-pointer"
+          title="Watch Product Demo Video"
+        >
+          <Video className="w-3.5 h-3.5 text-[#a3e635]" />
+          <span className="hidden md:inline">Watch Demo</span>
+        </button>
+
         <button 
           className="p-2 text-[#94a3b8] hover:text-white hover:bg-[#151c27] rounded-xl transition"
           title="Help & Documentation"

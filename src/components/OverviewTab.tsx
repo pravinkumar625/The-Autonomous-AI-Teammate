@@ -1,16 +1,17 @@
 import React from 'react';
 import { MOCK_CONVERSATIONS } from '../data/mockData';
 import type { ConversationItem } from '../types';
-import { Sparkles, RefreshCw, ArrowUpRight, Filter } from 'lucide-react';
+import { Sparkles, RefreshCw, ArrowUpRight, Filter, Video } from 'lucide-react';
 
 
 interface OverviewTabProps {
   onOpenChat: () => void;
+  onOpenVideo?: () => void;
   onSelectConversation: (conv: ConversationItem) => void;
   userName: string;
 }
 
-export const OverviewTab: React.FC<OverviewTabProps> = ({ onOpenChat, onSelectConversation, userName }) => {
+export const OverviewTab: React.FC<OverviewTabProps> = ({ onOpenChat, onOpenVideo, onSelectConversation, userName }) => {
   const selectedRec = MOCK_CONVERSATIONS[0];
   const firstName = userName ? userName.split(' ')[0] : 'there';
 
@@ -37,6 +38,14 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onOpenChat, onSelectCo
 
         {/* Right Header Buttons matching screenshot */}
         <div className="flex items-center gap-3">
+          <button 
+            onClick={onOpenVideo}
+            className="px-4 py-2 bg-[#a3e635]/10 hover:bg-[#a3e635]/20 border border-[#a3e635]/30 text-[#a3e635] font-extrabold text-xs rounded-xl transition flex items-center gap-2 cursor-pointer shadow-md shadow-[#a3e635]/10"
+          >
+            <Video className="w-4 h-4 text-[#a3e635]" />
+            Watch Product Demo
+          </button>
+
           <button className="px-4 py-2 bg-[#141b26] hover:bg-[#1e2736] border border-[#232d3f] text-white font-bold text-xs rounded-xl transition flex items-center gap-2">
             <RefreshCw className="w-3.5 h-3.5 text-[#94a3b8]" />
             Sync workspace

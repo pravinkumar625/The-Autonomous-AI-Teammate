@@ -8,6 +8,7 @@ import { OutcomesTab } from './components/OutcomesTab';
 import { TeamTab } from './components/TeamTab';
 import { SettingsTab } from './components/SettingsTab';
 import { ChatDrawer } from './components/ChatDrawer';
+import { VideoModal } from './components/VideoModal';
 import { LoginPage } from './components/LoginPage';
 import type { TabType, ConversationItem } from './types';
 import { Sparkles } from 'lucide-react';
@@ -19,6 +20,7 @@ export function App() {
   const [userEmail, setUserEmail] = useState<string>('');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [selectedConversation, setSelectedConversation] = useState<ConversationItem | null>(null);
 
   const handleLogin = (name: string, email: string) => {
@@ -46,13 +48,20 @@ export function App() {
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Top Header Bar */}
-        <TopBar activeTab={activeTab} onOpenChat={() => setIsChatOpen(true)} userName={userName} userEmail={userEmail} />
+        <TopBar 
+          activeTab={activeTab} 
+          onOpenChat={() => setIsChatOpen(true)} 
+          onOpenVideo={() => setIsVideoOpen(true)}
+          userName={userName} 
+          userEmail={userEmail} 
+        />
 
         {/* Dynamic Content Canvas */}
         <main className="p-8 max-w-7xl w-full mx-auto space-y-6">
           {activeTab === 'overview' && (
             <OverviewTab
               onOpenChat={() => setIsChatOpen(true)}
+              onOpenVideo={() => setIsVideoOpen(true)}
               onSelectConversation={handleSelectConversation}
               userName={userName}
             />
@@ -84,6 +93,12 @@ export function App() {
       <ChatDrawer
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}
+      />
+
+      {/* Demo Video Modal */}
+      <VideoModal
+        isOpen={isVideoOpen}
+        onClose={() => setIsVideoOpen(false)}
       />
 
     </div>
