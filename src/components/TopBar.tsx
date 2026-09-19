@@ -1,5 +1,5 @@
 import React from 'react';
-import { HelpCircle, Bell, Video, Users } from 'lucide-react';
+import { HelpCircle, Bell, Video, Users, LogOut } from 'lucide-react';
 import type { TabType, UserRole } from '../types';
 
 interface TopBarProps {
@@ -7,11 +7,12 @@ interface TopBarProps {
   onOpenChat?: () => void;
   onOpenVideo?: () => void;
   onSwitchRole?: (role: UserRole) => void;
+  onLogout?: () => void;
   userName: string;
   userEmail: string;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVideo, onSwitchRole, userName, userEmail: _userEmail }) => {
+export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVideo, onSwitchRole, onLogout, userName, userEmail: _userEmail }) => {
   const initials = userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'U';
   const firstName = userName ? userName.split(' ')[0] : 'User';
 
@@ -30,8 +31,18 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVid
   return (
     <header className="sticky top-0 z-20 bg-[#091026]/90 backdrop-blur-md border-b border-slate-800/80 px-8 py-4 flex items-center justify-between font-sans">
       
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+      {/* Breadcrumb & Back Button */}
+      <div className="flex items-center gap-3 text-xs font-medium text-slate-400">
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition cursor-pointer font-bold"
+            title="Log out and return to Login screen"
+          >
+            <LogOut className="w-3.5 h-3.5 text-slate-400" />
+            <span>Log Out</span>
+          </button>
+        )}
         <span>Workspace</span>
         <span>›</span>
         <span className="text-white font-bold">{getBreadcrumb()}</span>

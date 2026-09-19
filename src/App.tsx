@@ -39,6 +39,10 @@ export function App() {
     setActiveTab('conversations');
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
   // 1. Show Video Showcase Page BEFORE Login Page
   if (showIntro) {
     return <IntroVideoPage onStart={() => setShowIntro(false)} />;
@@ -64,6 +68,7 @@ export function App() {
           onOpenChat={() => setIsChatOpen(true)}
           onOpenVideo={() => setIsVideoOpen(true)}
           onSwitchRole={(role) => setUserRole(role)}
+          onLogout={handleLogout}
         />
 
         {/* AI Teammate Chat Drawer */}
@@ -97,6 +102,7 @@ export function App() {
           onOpenChat={() => setIsChatOpen(true)} 
           onOpenVideo={() => setIsVideoOpen(true)}
           onSwitchRole={(role) => setUserRole(role)}
+          onLogout={handleLogout}
           userName={userName} 
           userEmail={userEmail} 
         />

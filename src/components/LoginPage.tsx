@@ -25,8 +25,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onWatchVideo }) =
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-blue-600/20 via-sky-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Top Header Logo */}
-      <header className="pt-6 relative z-10">
+      {/* Top Header Logo & Back Button */}
+      <header className="w-full max-w-md mx-auto pt-6 flex items-center justify-between relative z-10">
+        <button
+          type="button"
+          onClick={onWatchVideo}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0f172a] hover:bg-slate-800 border border-slate-700 text-[#60a5fa] text-xs font-bold rounded-xl transition cursor-pointer"
+        >
+          <span>← Back to Video</span>
+        </button>
+
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-[#2563eb] flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/30">
             <Bot className="w-6 h-6 text-white" />
