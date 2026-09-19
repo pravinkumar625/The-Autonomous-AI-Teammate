@@ -75,6 +75,8 @@ export function App() {
         <ChatDrawer
           isOpen={isChatOpen}
           onClose={() => setIsChatOpen(false)}
+          userName={userName}
+          userRole={userRole}
         />
 
         {/* Demo Video Modal */}
@@ -144,6 +146,8 @@ export function App() {
       <ChatDrawer
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}
+        userName={userName}
+        userRole={userRole}
       />
 
       {/* Base Video Modal */}

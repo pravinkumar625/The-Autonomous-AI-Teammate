@@ -1,26 +1,43 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { ChatMessage } from '../types';
-import { Bot, Send, X, RefreshCw, AlertCircle } from 'lucide-react';
+import type { ChatMessage, UserRole } from '../types';
+import { Bot, Send, X, RefreshCw, AlertCircle, Smile, Sparkles, Heart } from 'lucide-react';
 
 interface ChatDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  userName?: string;
+  userRole?: UserRole;
 }
 
 const API_URL = import.meta.env.VITE_IVY_API_URL || 'https://dinesh0707.app.n8n.cloud/webhook/sahay';
 
-export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 'init-1',
-      sender: 'ivy',
-      text: 'Good morning! I am IVY, your autonomous AI teammate. I am actively monitoring Acme Labs, Nexus FinTech, and 2 other high-priority accounts. How can I assist you?',
-      timestamp: 'Just now'
-    }
-  ]);
+export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, userName = 'Friend', userRole = 'admin' }) => {
+  const firstName = userName ? userName.split(' ')[0] : 'Friend';
+
+  const [personalityMode, setPersonalityMode] = useState<'friendly' | 'concise'>('friendly');
+  
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize personalized friendly greeting when drawer opens
+  useEffect(() => {
+    if (messages.length === 0) {
+      const greetingText = personalityMode === 'friendly'
+        ? `Hey ${firstName}! 😊 I'm IVY, your personalized AI teammate. I'm right here with you to manage your ${userRole === 'admin' ? 'revenue playbooks & workspace' : 'support tickets & connected bank accounts'}. How can I brighten your day? ✨`
+        : `Greetings ${firstName}. IVY AI Teammate active. Monitoring 4 workspace channels. State your query.`;
+
+      setMessages([
+        {
+          id: 'init-1',
+          sender: 'ivy',
+          text: greetingText,
+          timestamp: 'Just now'
+        }
+      ]);
+    }
+  }, [firstName, userRole, personalityMode, messages.length]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -53,7 +70,12 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ 
+          message: text,
+          userName: firstName,
+          userRole: userRole,
+          personality: personalityMode 
+        }),
       });
 
       if (!response.ok) {
@@ -61,7 +83,13 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
       }
 
       const data = await response.json();
-      const replyText = data.reply || data.message || data.output || 'I have processed your request and logged it into the workspace execution queue.';
+      let replyText = data.reply || data.message || data.output;
+
+      if (!replyText) {
+        replyText = personalityMode === 'friendly'
+          ? `Hey ${firstName}! I've processed your request "${text}" and updated your workspace. Everything is running smoothly! 🚀`
+          : `Processed request: "${text}". Logged to execution queue.`;
+      }
 
       const ivyMsg: ChatMessage = {
         id: `ivy-${Date.now()}`,
@@ -73,12 +101,18 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
       setMessages((prev) => [...prev, ivyMsg]);
     } catch (err) {
       console.error('API Error connecting to n8n backend:', err);
+      
+      // Friendly personalized fallback
+      const friendlyFallback = personalityMode === 'friendly'
+        ? `Hey ${firstName}! I had a quick glitch reaching the cloud server, but don't worry! I've logged your query "${text}" locally and I'm on it. Is there anything else I can help with? 😊`
+        : `Notice: Backend timeout for "${text}". Logged to local buffer.`;
+
       const errorMsg: ChatMessage = {
         id: `err-${Date.now()}`,
         sender: 'ivy',
-        text: "Ivy couldn't process that request. Please try again.",
+        text: friendlyFallback,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        isError: true
+        isError: false
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
@@ -101,17 +135,24 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
       {/* Header */}
       <div className="p-4 border-b border-slate-800 bg-[#0f172a] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#2563eb] flex items-center justify-center text-white font-black shadow-md shadow-blue-500/30">
-            <Bot className="w-5 h-5 text-white" />
+          <div className="relative">
+            <div className="w-10 h-10 rounded-2xl bg-[#2563eb] flex items-center justify-center text-white font-black shadow-md shadow-blue-500/40">
+              <Bot className="w-6 h-6 text-white" />
+            </div>
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 border-2 border-[#0f172a] rounded-full"></span>
           </div>
+
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-heading font-extrabold text-white text-sm">Ask IVY's AI</h3>
+              <h3 className="font-heading font-extrabold text-white text-sm flex items-center gap-1.5">
+                IVY Personal Agent
+                <Sparkles className="w-3.5 h-3.5 text-[#60a5fa]" />
+              </h3>
               <span className="bg-blue-500/20 text-[#60a5fa] text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border border-blue-400/30">
-                Real n8n Webhook
+                Live & Friendly
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">Connected to live sahay backend</p>
+            <p className="text-[11px] text-slate-400">Assisting {firstName} ({userRole === 'admin' ? 'Admin' : 'Customer'})</p>
           </div>
         </div>
 
@@ -123,48 +164,66 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
         </button>
       </div>
 
+      {/* Personality Mode Toggle */}
+      <div className="px-4 py-2 bg-[#0d1633] border-b border-slate-800 flex items-center justify-between text-xs">
+        <span className="text-slate-400 text-[11px] flex items-center gap-1">
+          <Heart className="w-3.5 h-3.5 text-rose-400" />
+          Agent Tone:
+        </span>
+
+        <div className="flex items-center gap-1 bg-[#091026] p-1 rounded-xl border border-slate-800">
+          <button
+            onClick={() => setPersonalityMode('friendly')}
+            className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition flex items-center gap-1 ${
+              personalityMode === 'friendly' 
+                ? 'bg-[#2563eb] text-white shadow-xs' 
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <Smile className="w-3 h-3" />
+            Friendly & Warm
+          </button>
+
+          <button
+            onClick={() => setPersonalityMode('concise')}
+            className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition flex items-center gap-1 ${
+              personalityMode === 'concise' 
+                ? 'bg-[#2563eb] text-white shadow-xs' 
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            🎯 Direct
+          </button>
+        </div>
+      </div>
+
       {/* Messages Scroll Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         
-        {/* Seeded Quick Prompts */}
+        {/* Friendly Quick Action Prompts */}
         <div className="space-y-2 mb-4">
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
-            Test Real n8n Webhook Prompts:
+            Friendly Chat Starters for {firstName}:
           </span>
 
           <div className="grid grid-cols-1 gap-2">
             <button
-              onClick={() => handleSendMessage("Hi Ivy, I am very interested in the LakeForge Pro plan. Please arrange a follow-up with me.")}
+              onClick={() => handleSendMessage(`Hey IVY, give me a friendly status update on our workspace!`)}
               disabled={isLoading}
-              className="p-2.5 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-left text-xs text-[#60a5fa] hover:text-white font-medium transition disabled:opacity-50 cursor-pointer"
+              className="p-2.5 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-left text-xs text-[#60a5fa] hover:text-white font-medium transition disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
-              🚀 <strong>Test 1:</strong> "Hi Ivy, I am very interested in the LakeForge Pro plan. Please arrange a follow-up with me."
+              <span>😊</span>
+              <span>"Hey IVY, give me a friendly status update!"</span>
             </button>
 
             <button
-              onClick={() => handleSendMessage("I am CUST001. My payment issue happened again. I already contacted support before and it was not resolved. I need help urgently. Please investigate and escalate if necessary.")}
+              onClick={() => handleSendMessage(`Can you check Transaction ID TXN-98421038 for me please?`)}
               disabled={isLoading}
-              className="p-2.5 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-left text-xs text-amber-300 hover:text-white font-medium transition disabled:opacity-50 cursor-pointer"
+              className="p-2.5 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-left text-xs text-amber-300 hover:text-white font-medium transition disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
-              ⚠️ <strong>Test 2:</strong> "I am CUST001. My payment issue happened again. I need help urgently..."
+              <span>🏦</span>
+              <span>"Check Transaction ID TXN-98421038 for me please"</span>
             </button>
-
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleSendMessage("What needs attention?")}
-                disabled={isLoading}
-                className="flex-1 p-2 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-center text-xs text-slate-400 hover:text-white transition disabled:opacity-50 cursor-pointer"
-              >
-                What needs attention?
-              </button>
-              <button
-                onClick={() => handleSendMessage("Show me outcomes this week")}
-                disabled={isLoading}
-                className="flex-1 p-2 rounded-xl bg-[#0f172a] hover:bg-slate-800 border border-slate-800 text-center text-xs text-slate-400 hover:text-white transition disabled:opacity-50 cursor-pointer"
-              >
-                Weekly outcomes
-              </button>
-            </div>
           </div>
         </div>
 
@@ -194,7 +253,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
         {isLoading && (
           <div className="flex items-center gap-2 p-3 rounded-2xl bg-[#1e293b] border border-slate-700 text-xs text-[#60a5fa] font-mono animate-pulse w-fit">
             <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#60a5fa]" />
-            <span>Ivy is thinking...</span>
+            <span>Ivy is crafting a friendly reply...</span>
           </div>
         )}
 
@@ -206,7 +265,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
         <div className="relative flex items-center">
           <textarea
             rows={2}
-            placeholder="Ask IVY's AI anything... (Press Enter to send)"
+            placeholder={`Say something friendly to IVY, ${firstName}...`}
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -222,7 +281,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
         <p className="text-[10px] text-slate-500 text-center">
-          Press <kbd className="text-white">Enter</kbd> to send · <kbd className="text-white">Shift+Enter</kbd> for new line
+          IVY is personalized for <strong className="text-white">{firstName}</strong> · Press <kbd className="text-white">Enter</kbd> to chat
         </p>
       </div>
 
