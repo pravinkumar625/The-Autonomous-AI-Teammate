@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #0b0e14;
+    --bg-surface: #121721;
+    --bg-card: #18202c;
+    --border-color: #232d3f;
+    --accent-lime: #a3e635;
+    --accent-lime-hover: #bef264;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* Custom Ivy UI Styles matching the reference screenshot input_file_0.png */
+.ivy-card {
+  background: rgba(24, 32, 44, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.ivy-card-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.ivy-card-hover:hover {
+  border-color: rgba(163, 230, 53, 0.3);
+  box-shadow: 0 0 25px -5px rgba(163, 230, 53, 0.15);
+}
+
+.ivy-lime-btn {
+  background-color: #a3e635;
+  color: #0b0e14;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.ivy-lime-btn:hover {
+  background-color: #bef264;
+  box-shadow: 0 0 20px rgba(163, 230, 53, 0.35);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0e14;
+}
+::-webkit-scrollbar-thumb {
+  background: #232d3f;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
