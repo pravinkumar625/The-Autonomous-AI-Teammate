@@ -10,7 +10,8 @@ import { SettingsTab } from './components/SettingsTab';
 import { ChatDrawer } from './components/ChatDrawer';
 import { VideoModal } from './components/VideoModal';
 import { LoginPage } from './components/LoginPage';
-import type { TabType, ConversationItem } from './types';
+import { CustomerDashboard } from './components/CustomerDashboard';
+import type { TabType, ConversationItem, UserRole } from './types';
 import { Sparkles } from 'lucide-react';
 
 
@@ -18,14 +19,16 @@ export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Show login first
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userRole, setUserRole] = useState<UserRole>('admin');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [selectedConversation, setSelectedConversation] = useState<ConversationItem | null>(null);
 
-  const handleLogin = (name: string, email: string) => {
+  const handleLogin = (name: string, email: string, role: UserRole) => {
     setUserName(name);
     setUserEmail(email);
+    setUserRole(role);
     setIsAuthenticated(true);
   };
 
@@ -38,6 +41,34 @@ export function App() {
     return <LoginPage onLogin={handleLogin} />;
   }
 
+  // Render Customer Dashboard View
+  if (userRole === 'customer') {
+    return (
+      <>
+        <CustomerDashboard
+          userName={userName}
+          userEmail={userEmail}
+          onOpenChat={() => setIsChatOpen(true)}
+          onOpenVideo={() => setIsVideoOpen(true)}
+          onSwitchRole={(role) => setUserRole(role)}
+        />
+
+        {/* AI Teammate Chat Drawer */}
+        <ChatDrawer
+          isOpen={isChatOpen}
+          onClose={() => setIsChatOpen(false)}
+        />
+
+        {/* Demo Video Modal */}
+        <VideoModal
+          isOpen={isVideoOpen}
+          onClose={() => setIsVideoOpen(false)}
+        />
+      </>
+    );
+  }
+
+  // Render Admin / Internal Teammate Dashboard View
   return (
     <div className="flex min-h-screen bg-[#0b0e14] text-white font-sans antialiased selection:bg-[#a3e635] selection:text-[#0b0e14]">
       
@@ -52,6 +83,7 @@ export function App() {
           activeTab={activeTab} 
           onOpenChat={() => setIsChatOpen(true)} 
           onOpenVideo={() => setIsVideoOpen(true)}
+          onSwitchRole={(role) => setUserRole(role)}
           userName={userName} 
           userEmail={userEmail} 
         />

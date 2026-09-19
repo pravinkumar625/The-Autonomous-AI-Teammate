@@ -1,20 +1,19 @@
 import React from 'react';
-import { HelpCircle, Bell, Video } from 'lucide-react';
-import type { TabType } from '../types';
+import { HelpCircle, Bell, Video, Users } from 'lucide-react';
+import type { TabType, UserRole } from '../types';
 
 interface TopBarProps {
   activeTab: TabType;
   onOpenChat?: () => void;
   onOpenVideo?: () => void;
+  onSwitchRole?: (role: UserRole) => void;
   userName: string;
   userEmail: string;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVideo, userName, userEmail: _userEmail }) => {
+export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVideo, onSwitchRole, userName, userEmail: _userEmail }) => {
   const initials = userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'U';
   const firstName = userName ? userName.split(' ')[0] : 'User';
-
-
 
   const getBreadcrumb = () => {
     switch (activeTab) {
@@ -40,6 +39,19 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, onOpenVid
 
       {/* Right icons & Profile matching screenshot */}
       <div className="flex items-center gap-3">
+        
+        {/* Customer Portal View Switcher Button */}
+        {onSwitchRole && (
+          <button
+            onClick={() => onSwitchRole('customer')}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1e2736] hover:bg-[#283549] border border-[#2d384d] rounded-xl text-xs font-bold text-[#94a3b8] hover:text-white transition cursor-pointer"
+            title="Switch to Customer Portal View"
+          >
+            <Users className="w-3.5 h-3.5 text-[#a3e635]" />
+            <span className="hidden sm:inline">Customer View</span>
+          </button>
+        )}
+
         {/* Watch Demo Video Button */}
         <button
           onClick={onOpenVideo}

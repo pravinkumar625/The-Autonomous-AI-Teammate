@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { Bot, ArrowRight, ShieldCheck } from 'lucide-react';
-
+import { Bot, ArrowRight, ShieldCheck, UserCheck, Users } from 'lucide-react';
+import type { UserRole } from '../types';
 
 interface LoginPageProps {
-  onLogin: (name: string, email: string) => void;
+  onLogin: (name: string, email: string, role: UserRole) => void;
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [role, setRole] = useState<UserRole>('admin');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email) return;
-    onLogin(name, email);
+    onLogin(name, email, role);
   };
 
   return (
@@ -49,6 +50,54 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+            
+            {/* Select Dashboard Role */}
+            <div>
+              <label className="block text-xs font-mono font-bold text-[#94a3b8] uppercase tracking-wider mb-2">
+                Select Dashboard Workspace
+              </label>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setRole('admin')}
+                  className={`p-3 rounded-xl border text-left flex flex-col justify-between transition cursor-pointer ${
+                    role === 'admin'
+                      ? 'bg-[#a3e635]/15 border-[#a3e635] text-white shadow-md shadow-[#a3e635]/10'
+                      : 'bg-[#121721] border-[#232d3f] text-[#94a3b8] hover:border-[#38475e]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <UserCheck className={`w-4 h-4 ${role === 'admin' ? 'text-[#a3e635]' : 'text-[#64748b]'}`} />
+                    {role === 'admin' && <span className="w-2 h-2 rounded-full bg-[#a3e635]"></span>}
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-white">Admin Teammate</div>
+                    <p className="text-[10px] text-[#8e9bb0]">Full Revenue Dashboard</p>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setRole('customer')}
+                  className={`p-3 rounded-xl border text-left flex flex-col justify-between transition cursor-pointer ${
+                    role === 'customer'
+                      ? 'bg-[#a3e635]/15 border-[#a3e635] text-white shadow-md shadow-[#a3e635]/10'
+                      : 'bg-[#121721] border-[#232d3f] text-[#94a3b8] hover:border-[#38475e]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <Users className={`w-4 h-4 ${role === 'customer' ? 'text-[#a3e635]' : 'text-[#64748b]'}`} />
+                    {role === 'customer' && <span className="w-2 h-2 rounded-full bg-[#a3e635]"></span>}
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-white">Customer Portal</div>
+                    <p className="text-[10px] text-[#8e9bb0]">AI Support & Tickets</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs font-mono font-bold text-[#94a3b8] uppercase tracking-wider mb-1">
                 Your Full Name
@@ -81,7 +130,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               type="submit"
               className="w-full ivy-lime-btn py-3.5 rounded-xl text-xs font-black shadow-lg shadow-[#a3e635]/25 flex items-center justify-center gap-2 cursor-pointer mt-4"
             >
-              Continue to IVY's
+              Launch {role === 'admin' ? 'Admin Dashboard' : 'Customer Portal'}
               <ArrowRight className="w-4 h-4 text-[#0b0e14]" />
             </button>
           </form>

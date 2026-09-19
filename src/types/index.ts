@@ -1,4 +1,5 @@
 export type TabType = 'overview' | 'conversations' | 'playbooks' | 'outcomes' | 'team' | 'settings';
+export type UserRole = 'admin' | 'customer';
 
 export interface ChatMessage {
   id: string;
