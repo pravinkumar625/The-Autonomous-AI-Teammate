@@ -7,10 +7,12 @@ import { Sparkles, RefreshCw, ArrowUpRight, Filter } from 'lucide-react';
 interface OverviewTabProps {
   onOpenChat: () => void;
   onSelectConversation: (conv: ConversationItem) => void;
+  userName: string;
 }
 
-export const OverviewTab: React.FC<OverviewTabProps> = ({ onOpenChat, onSelectConversation }) => {
+export const OverviewTab: React.FC<OverviewTabProps> = ({ onOpenChat, onSelectConversation, userName }) => {
   const selectedRec = MOCK_CONVERSATIONS[0];
+  const firstName = userName ? userName.split(' ')[0] : 'there';
 
   return (
     <div className="space-y-6 text-left">
@@ -28,7 +30,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ onOpenChat, onSelectCo
           </div>
 
           <h1 className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight leading-tight">
-            Good morning, Jordan. <br />
+            Good morning, {firstName}. <br />
             <span className="text-[#94a3b8]">Your teammate is already moving.</span>
           </h1>
         </div>

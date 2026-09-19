@@ -7,8 +7,8 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
-  const [name, setName] = useState('Jordan Pravin');
-  const [email, setEmail] = useState('jordan.p@yenepoya.edu.in');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Jordan Pravin"
+                placeholder="e.g. Pravin Kumar"
                 className="w-full p-3 bg-[#121721] text-xs text-white placeholder-[#64748b] rounded-xl border border-[#232d3f] focus:outline-none focus:border-[#a3e635] transition"
               />
             </div>
@@ -72,7 +72,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="jordan.p@yenepoya.edu.in"
+                placeholder="e.g. pravin@yenepoya.edu.in"
                 className="w-full p-3 bg-[#121721] text-xs text-white placeholder-[#64748b] rounded-xl border border-[#232d3f] focus:outline-none focus:border-[#a3e635] transition"
               />
             </div>

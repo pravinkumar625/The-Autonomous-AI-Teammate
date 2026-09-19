@@ -14,12 +14,16 @@ import { Sparkles } from 'lucide-react';
 
 
 export function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true); // Logged in by default for demo
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Show login first
+  const [userName, setUserName] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [selectedConversation, setSelectedConversation] = useState<ConversationItem | null>(null);
 
-  const handleLogin = (_name: string, _email: string) => {
+  const handleLogin = (name: string, email: string) => {
+    setUserName(name);
+    setUserEmail(email);
     setIsAuthenticated(true);
   };
 
@@ -35,14 +39,14 @@ export function App() {
   return (
     <div className="flex min-h-screen bg-[#0b0e14] text-white font-sans antialiased selection:bg-[#a3e635] selection:text-[#0b0e14]">
       
-      {/* Sidebar Navigation matching screenshot input_file_0.png */}
-      <SidebarNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      {/* Sidebar Navigation */}
+      <SidebarNav activeTab={activeTab} setActiveTab={setActiveTab} userName={userName} />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Top Header Bar */}
-        <TopBar activeTab={activeTab} onOpenChat={() => setIsChatOpen(true)} />
+        <TopBar activeTab={activeTab} onOpenChat={() => setIsChatOpen(true)} userName={userName} userEmail={userEmail} />
 
         {/* Dynamic Content Canvas */}
         <main className="p-8 max-w-7xl w-full mx-auto space-y-6">
@@ -50,6 +54,7 @@ export function App() {
             <OverviewTab
               onOpenChat={() => setIsChatOpen(true)}
               onSelectConversation={handleSelectConversation}
+              userName={userName}
             />
           )}
 
@@ -64,7 +69,7 @@ export function App() {
         </main>
       </div>
 
-      {/* Floating Bright Lime "Ask IVY's" Chat Trigger Button (Bottom Right) */}
+      {/* Floating Lime "Ask IVY's" Chat Button */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
@@ -75,7 +80,7 @@ export function App() {
         </button>
       )}
 
-      {/* AI Teammate Chat Drawer connected to real n8n API endpoint */}
+      {/* AI Teammate Chat Drawer */}
       <ChatDrawer
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}

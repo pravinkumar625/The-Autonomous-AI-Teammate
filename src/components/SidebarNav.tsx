@@ -6,9 +6,10 @@ import { LayoutDashboard, MessageSquare, BookOpen, BarChart2, Users, Settings, B
 interface SidebarNavProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
+  userName: string;
 }
 
-export const SidebarNav: React.FC<SidebarNavProps> = ({ activeTab, setActiveTab }) => {
+export const SidebarNav: React.FC<SidebarNavProps> = ({ activeTab, setActiveTab, userName }) => {
   const MAIN_NAV = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'conversations', label: 'Conversations', icon: MessageSquare, badge: '12' },
@@ -119,10 +120,10 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({ activeTab, setActiveTab 
       <div className="pt-4 border-t border-[#1e2634] flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-full bg-[#1e2736] border border-[#2d384d] flex items-center justify-center text-white font-bold text-xs">
-            JD
+            {userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'U'}
           </div>
           <div className="text-left">
-            <p className="text-xs font-bold text-white line-clamp-1">Jordan Pravin</p>
+            <p className="text-xs font-bold text-white line-clamp-1">{userName || 'User'}</p>
             <p className="text-[10px] text-[#64748b]">Revenue Ops</p>
           </div>
         </div>

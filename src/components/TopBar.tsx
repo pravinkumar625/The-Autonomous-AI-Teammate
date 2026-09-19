@@ -6,9 +6,13 @@ import type { TabType } from '../types';
 interface TopBarProps {
   activeTab: TabType;
   onOpenChat?: () => void;
+  userName: string;
+  userEmail: string;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat }) => {
+export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat, userName, userEmail: _userEmail }) => {
+  const initials = userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'U';
+  const firstName = userName ? userName.split(' ')[0] : 'User';
 
 
 
@@ -56,9 +60,9 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenChat }) => {
         {/* Profile Pill matching screenshot */}
         <div className="flex items-center gap-2 pl-2 border-l border-[#1e2634]">
           <div className="w-8 h-8 rounded-full bg-[#1e2736] border border-[#2d384d] flex items-center justify-center text-white font-bold text-xs">
-            JD
+            {initials}
           </div>
-          <span className="text-xs font-bold text-white hidden sm:inline">Pravin</span>
+          <span className="text-xs font-bold text-white hidden sm:inline">{firstName}</span>
         </div>
       </div>
 
